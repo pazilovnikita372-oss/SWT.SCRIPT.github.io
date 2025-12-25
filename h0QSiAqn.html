@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWT-SCRIPT - Лучшие скрипты для Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --secondary: #5d3fd3;
+            --accent: #00ff9d;
+            --dark: #0f0f1a;
+            --darker: #090912;
+            --light: #ffffff;
+            --gray: #a0a0a0;
+            --card-bg: #1a1a2e;
+            --text: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 15, 26, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-input {
+            padding: 12px 20px;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 30px;
+            width: 320px;
+            font-size: 1rem;
+            background: rgba(26, 26, 46, 0.7);
+            color: var(--text);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .search-btn, .admin-btn, .github-btn, .user-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .github-btn {
+            background: linear-gradient(45deg, #333, #6e5494);
+        }
+
+        .user-btn {
+            background: linear-gradient(45deg, #00b894, #00a8ff);
+        }
+
+        /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            width: 350px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            display: none;
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea, .file-input {
+            padding: 12px;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: rgba(15, 15, 26, 0.7);
+            color: var(--text);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .publish-btn {
+            padding: 14px;
+            background: linear-gradient(45deg, var(--accent), #00ccff);
+            border: none;
+            border-radius: 10px;
+            color: var(--darker);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Scripts Grid */
+        .scripts-container {
+            flex: 1;
+        }
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* Script Cards */
+        .script-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .script-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .script-content {
+            padding: 20px;
+        }
+
+        .script-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .view-script-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Script Page */
+        .script-page {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .back-btn {
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .script-code {
+            background: #0f0f1a;
+            color: var(--accent);
+            padding: 25px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 20px 0;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, var(--accent), #00ccff);
+            border: none;
+            border-radius: 12px;
+            color: var(--darker);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 9, 18, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .close-modal {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .admin-panel {
+                width: 100%;
+                position: static;
+            }
+            
+            .scripts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">SWT-SCRIPT</div>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Поиск игры или скрипта...">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Поиск
+                    </button>
+                    <button class="github-btn" id="githubBtn">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                    <button class="admin-btn" id="adminBtn">
+                        <i class="fas fa-user-shield"></i> Админ
+                    </button>
+                    <div id="userInfo" style="display: none;">
+                        <div class="user-info">
+                            <div class="user-avatar" id="userAvatar">
+                                <span id="avatarText">A</span>
+                            </div>
+                            <span id="userName">Админ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Admin Panel -->
+            <div class="admin-panel" id="adminPanel">
+                <h3><i class="fas fa-plus-circle"></i> Добавить скрипт</h3>
+                <form class="admin-form" id="adminForm">
+                    <div class="form-group">
+                        <label>Название скрипта:</label>
+                        <input type="text" class="form-input" id="postTitle" placeholder="Введите название" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание:</label>
+                        <textarea class="form-textarea" id="postDescription" placeholder="Опишите ваш скрипт" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Изображение скрипта:</label>
+                        <input type="file" class="file-input" id="postImageFile" accept="image/*">
+                        <input type="text" class="form-input" id="postImageUrl" placeholder="Или вставьте URL">
+                    </div>
+                    <div class="form-group">
+                        <label>Код скрипта (Lua):</label>
+                        <textarea class="form-textarea" id="postScript" placeholder="-- Вставьте код Lua скрипта" required rows="6"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Категория:</label>
+                        <select class="form-select" id="postCategory" required>
+                            <option value="universal">Universal</option>
+                            <option value="game">Для игры</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="gameInputGroup" style="display: none;">
+                        <label>Название игры:</label>
+                        <input type="text" class="form-input" id="postGame" placeholder="Введите название игры">
+                    </div>
+                    <button type="submit" class="publish-btn">
+                        <i class="fas fa-paper-plane"></i> Опубликовать
+                    </button>
+                </form>
+            </div>
+
+            <!-- Scripts Container -->
+            <div class="scripts-container">
+                <h2>Популярные скрипты</h2>
+                
+                <div class="scripts-grid" id="scriptsGrid">
+                    <!-- Scripts will appear here -->
+                </div>
+                
+                <!-- Script Page -->
+                <div class="script-page" id="scriptPage">
+                    <button class="back-btn" id="backBtn">
+                        <i class="fas fa-arrow-left"></i> Назад
+                    </button>
+                    <h2 id="scriptPageTitle">Название скрипта</h2>
+                    <img id="scriptPageImage" src="" alt="Script Image" class="script-image">
+                    <p id="scriptPageDescription">Описание скрипта</p>
+                    
+                    <div class="script-code" id="scriptPageCode">
+                        // Код скрипта будет здесь
+                    </div>
+                    
+                    <button class="copy-btn" id="copyScriptBtn">
+                        <i class="fas fa-copy"></i> Скопировать скрипт
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            <h3>Вход в админ-панель</h3>
+            <div class="form-group">
+                <label>Ваш ник:</label>
+                <input type="text" class="form-input" id="adminName" placeholder="Введите ваш ник" required>
+            </div>
+            <div class="form-group">
+                <label>Админ ключ:</label>
+                <input type="password" class="form-input" id="adminKey" placeholder="Введите пароль" required>
+                <small style="color: var(--gray); margin-top: 5px;">Пароль: секрет💗</small>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="search-btn" id="adminLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <button class="search-btn" id="cancelAdminBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Modal -->
+    <div class="modal" id="avatarModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAvatarModal">&times;</button>
+            <h3>Сменить аватар</h3>
+            <div class="form-group">
+                <label>Выберите аватар:</label>
+                <input type="file" class="file-input" id="avatarFileInput" accept="image/*">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="publish-btn" id="saveAvatarBtn">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+                <button class="search-btn" id="cancelAvatarBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SIMPLE DATABASE USING localStorage
+        const STORAGE_KEY = 'swt_scripts';
+        const USER_KEY = 'swt_user';
+        const ADMIN_PASSWORD = 'SNOWT69';
+        
+        let currentUser = null;
+        let isAdmin = false;
+        let scripts = [];
+        let currentAvatar = null;
+        
+        // Initialize database
+        function initDatabase() {
+            const savedScripts = localStorage.getItem(STORAGE_KEY);
+            if (savedScripts) {
+                scripts = JSON.parse(savedScripts);
+            } else {
+                // Default scripts
+                scripts = [
+                    {
+                        id: '1',
+                        title: 'Infinite Yield FE',
+                        description: 'Самый популярный админ-скрипт для Roblox',
+                        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        script: '-- Infinite Yield FE\nloadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()',
+                        category: 'universal',
+                        game: '',
+                        views: 12500,
+                        size: '1.2 MB',
+                        author: 'System'
+                    },
+                    {
+                        id: '2',
+                        title: 'Arsenal AimBot',
+                        description: 'Aimbot для игры Arsenal',
+                        image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                        script: '-- Arsenal AimBot\nprint("AimBot загружен!")\n-- Ваш код здесь',
+                        category: 'game',
+                        game: 'Arsenal',
+                        views: 8900,
+                        size: '900 KB',
+                        author: 'System'
+                    }
+                ];
+                saveScripts();
+            }
+            
+            // Load user
+            const savedUser = localStorage.getItem(USER_KEY);
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                currentUser = user.name;
+                isAdmin = user.isAdmin;
+                currentAvatar = user.avatar || null;
+                if (isAdmin) {
+                    showAdminPanel();
+                }
+            }
+        }
+        
+        // Save scripts
+        function saveScripts() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(scripts));
+        }
+        
+        // Save user
+        function saveUser() {
+            const userData = {
+                name: currentUser,
+                isAdmin: isAdmin,
+                avatar: currentAvatar
+            };
+            localStorage.setItem(USER_KEY, JSON.stringify(userData));
+        }
+        
+        // DOM Elements
+        const elements = {
+            scriptsGrid: document.getElementById('scriptsGrid'),
+            scriptPage: document.getElementById('scriptPage'),
+            adminPanel: document.getElementById('adminPanel'),
+            searchInput: document.getElementById('searchInput'),
+            searchBtn: document.getElementById('searchBtn'),
+            adminBtn: document.getElementById('adminBtn'),
+            githubBtn: document.getElementById('githubBtn'),
+            backBtn: document.getElementById('backBtn'),
+            copyScriptBtn: document.getElementById('copyScriptBtn'),
+            adminForm: document.getElementById('adminForm'),
+            userInfo: document.getElementById('userInfo'),
+            userAvatar: document.getElementById('userAvatar'),
+            avatarText: document.getElementById('avatarText'),
+            userName: document.getElementById('userName'),
+            
+            // Modals
+            adminModal: document.getElementById('adminModal'),
+            avatarModal: document.getElementById('avatarModal'),
+            
+            // Form elements
+            adminNameInput: document.getElementById('adminName'),
+            adminKeyInput: document.getElementById('adminKey'),
+            postTitle: document.getElementById('postTitle'),
+            postDescription: document.getElementById('postDescription'),
+            postImageFile: document.getElementById('postImageFile'),
+            postImageUrl: document.getElementById('postImageUrl'),
+            postScript: document.getElementById('postScript'),
+            postCategory: document.getElementById('postCategory'),
+            postGame: document.getElementById('postGame'),
+            gameInputGroup: document.getElementById('gameInputGroup')
+        };
+        
+        // Show admin panel
+        function showAdminPanel() {
+            elements.adminPanel.style.display = 'block';
+            elements.userInfo.style.display = 'flex';
+            elements.userName.textContent = currentUser;
+            if (currentAvatar) {
+                elements.avatarText.style.display = 'none';
+                elements.userAvatar.style.backgroundImage = `url(${currentAvatar})`;
+                elements.userAvatar.style.backgroundSize = 'cover';
+            } else {
+                elements.avatarText.textContent = currentUser.charAt(0).toUpperCase();
+            }
+        }
+        
+        // Hide admin panel
+        function hideAdminPanel() {
+            elements.adminPanel.style.display = 'none';
+            elements.userInfo.style.display = 'none';
+            isAdmin = false;
+            currentUser = null;
+            localStorage.removeItem(USER_KEY);
+        }
+        
+        // Display scripts
+        function displayScripts(scriptsToShow = scripts) {
+            elements.scriptsGrid.innerHTML = '';
+            
+            if (scriptsToShow.length === 0) {
+                elements.scriptsGrid.innerHTML = '<p>Скрипты не найдены</p>';
+                return;
+            }
+            
+            scriptsToShow.forEach(script => {
+                const card = document.createElement('div');
+                card.className = 'script-card';
+                card.innerHTML = `
+                    <img src="${script.image}" alt="${script.title}" class="script-image" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'">
+                    <div class="script-content">
+                        <h3 class="script-title">${script.title}</h3>
+                        <p>${script.description}</p>
+                        <p>👁️ ${script.views} просмотров</p>
+                        <button class="view-script-btn" data-id="${script.id}">
+                            <i class="fas fa-code"></i> Посмотреть скрипт
+                        </button>
+                    </div>
+                `;
+                elements.scriptsGrid.appendChild(card);
+            });
+            
+            // Add event listeners
+            document.querySelectorAll('.view-script-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const scriptId = this.getAttribute('data-id');
+                    showScriptPage(scriptId);
+                });
+            });
+        }
+        
+        // Show script page
+        function showScriptPage(scriptId) {
+            const script = scripts.find(s => s.id === scriptId);
+            if (!script) return;
+            
+            // Increase views
+            script.views = (script.views || 0) + 1;
+            saveScripts();
+            
+            // Update UI
+            document.getElementById('scriptPageTitle').textContent = script.title;
+            document.getElementById('scriptPageImage').src = script.image;
+            document.getElementById('scriptPageDescription').textContent = script.description;
+            document.getElementById('scriptPageCode').textContent = script.script;
+            
+            // Show script page
+            elements.scriptsGrid.style.display = 'none';
+            elements.scriptPage.style.display = 'block';
+        }
+        
+        // Show main page
+        function showMainPage() {
+            elements.scriptsGrid.style.display = 'grid';
+            elements.scriptPage.style.display = 'none';
+            displayScripts();
+        }
+        
+        // Copy script
+        function copyScriptToClipboard() {
+            const scriptCode = document.getElementById('scriptPageCode').textContent;
+            navigator.clipboard.writeText(scriptCode).then(() => {
+                alert('Скрипт скопирован!');
+            });
+        }
+        
+        // Search scripts
+        function searchScripts() {
+            const searchTerm = elements.searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                displayScripts();
+                return;
+            }
+            
+            const filteredScripts = scripts.filter(script => 
+                script.title.toLowerCase().includes(searchTerm) || 
+                script.description.toLowerCase().includes(searchTerm) ||
+                (script.game && script.game.toLowerCase().includes(searchTerm))
+            );
+            
+            displayScripts(filteredScripts);
+        }
+        
+        // Admin login
+        function adminLogin() {
+            const username = elements.adminNameInput.value.trim();
+            const password = elements.adminKeyInput.value.trim();
+            
+            if (!username) {
+                alert('Введите ваш ник!');
+                return;
+            }
+            
+            if (password === ADMIN_PASSWORD) {
+                currentUser = username;
+                isAdmin = true;
+                saveUser();
+                
+                // Close modal and show admin panel
+                closeModal(elements.adminModal);
+                showAdminPanel();
+                
+                // Clear inputs
+                elements.adminNameInput.value = '';
+                elements.adminKeyInput.value = '';
+                
+                alert(`Добро пожаловать, ${username}!`);
+            } else {
+                alert('Неверный пароль! Правильный пароль: а я тебе не скажу💗');
+            }
+        }
+        
+        // Add new script
+        function addNewScript(event) {
+            event.preventDefault();
+            
+            if (!isAdmin) {
+                alert('Требуется админ доступ!');
+                return;
+            }
+            
+            const title = elements.postTitle.value.trim();
+            const description = elements.postDescription.value.trim();
+            const scriptCode = elements.postScript.value.trim();
+            
+            if (!title || !scriptCode) {
+                alert('Заполните название и код скрипта!');
+                return;
+            }
+            
+            // Get image URL
+            let imageUrl = elements.postImageUrl.value.trim();
+            if (elements.postImageFile.files[0]) {
+                // For file upload, convert to base64
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    finishAddingScript(title, description, scriptCode, imageUrl);
+                };
+                reader.readAsDataURL(elements.postImageFile.files[0]);
+            } else {
+                if (!imageUrl) {
+                    imageUrl = 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80';
+                }
+                finishAddingScript(title, description, scriptCode, imageUrl);
+            }
+        }
+        
+        function finishAddingScript(title, description, scriptCode, imageUrl) {
+            const newScript = {
+                id: Date.now().toString(),
+                title: title,
+                description: description || 'Без описания',
+                image: imageUrl,
+                script: scriptCode,
+                category: elements.postCategory.value || 'universal',
+                game: elements.postCategory.value === 'game' ? elements.postGame.value.trim() : '',
+                views: 0,
+                size: '1.2 MB',
+                author: currentUser,
+                createdAt: new Date().toISOString()
+            };
+            
+            scripts.unshift(newScript);
+            saveScripts();
+            displayScripts();
+            
+            // Reset form
+            elements.postTitle.value = '';
+            elements.postDescription.value = '';
+            elements.postImageFile.value = '';
+            elements.postImageUrl.value = '';
+            elements.postScript.value = '';
+            elements.postCategory.value = 'universal';
+            elements.postGame.value = '';
+            elements.gameInputGroup.style.display = 'none';
+            
+            alert('Скрипт успешно добавлен!');
+        }
+        
+        // Save avatar
+        function saveAvatar() {
+            const fileInput = document.getElementById('avatarFileInput');
+            if (!fileInput.files[0]) {
+                alert('Выберите изображение!');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentAvatar = e.target.result;
+                saveUser();
+                
+                // Update avatar display
+                elements.avatarText.style.display = 'none';
+                elements.userAvatar.style.backgroundImage = `url(${currentAvatar})`;
+                elements.userAvatar.style.backgroundSize = 'cover';
+                
+                closeModal(elements.avatarModal);
+                alert('Аватар сохранен!');
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+        
+        // Modal functions
+        function openModal(modal) {
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
+        
+        // Initialize event listeners
+        function initEventListeners() {
+            // Admin button
+            elements.adminBtn.addEventListener('click', () => {
+                if (isAdmin) {
+                    hideAdminPanel();
+                    alert('Админ режим выключен');
+                } else {
+                    openModal(elements.adminModal);
+                }
+            });
+            
+            // Search button
+            elements.searchBtn.addEventListener('click', searchScripts);
+            
+            // Search input enter key
+            elements.searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchScripts();
+                }
+            });
+            
+            // Back button
+            elements.backBtn.addEventListener('click', showMainPage);
+            
+            // Copy button
+            elements.copyScriptBtn.addEventListener('click', copyScriptToClipboard);
+            
+            // Admin form submit
+            elements.adminForm.addEventListener('submit', addNewScript);
+            
+            // Category change
+            elements.postCategory.addEventListener('change', function() {
+                elements.gameInputGroup.style.display = this.value === 'game' ? 'block' : 'none';
+            });
+            
+            // Admin modal buttons
+            document.getElementById('closeAdminModal').addEventListener('click', () => {
+                closeModal(elements.adminModal);
+            });
+            
+            document.getElementById('cancelAdminBtn').addEventListener('click', () => {
+                closeModal(elements.adminModal);
+            });
+            
+            document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+            
+            // User avatar click
+            elements.userAvatar.addEventListener('click', () => {
+                if (isAdmin) {
+                    openModal(elements.avatarModal);
+                }
+            });
+            
+            // Avatar modal
+            document.getElementById('closeAvatarModal').addEventListener('click', () => {
+                closeModal(elements.avatarModal);
+            });
+            
+            document.getElementById('cancelAvatarBtn').addEventListener('click', () => {
+                closeModal(elements.avatarModal);
+            });
+            
+            document.getElementById('saveAvatarBtn').addEventListener('click', saveAvatar);
+            
+            // GitHub button
+            elements.githubBtn.addEventListener('click', () => {
+                window.open('https://github.com', '_blank');
+            });
+            
+            // Close modals on outside click
+            window.addEventListener('click', (e) => {
+                if (e.target === elements.adminModal) {
+                    closeModal(elements.adminModal);
+                }
+                if (e.target === elements.avatarModal) {
+                    closeModal(elements.avatarModal);
+                }
+            });
+        }
+        
+        // Initialize app
+        function initApp() {
+            initDatabase();
+            initEventListeners();
+            displayScripts();
+        }
+        
+        // Start the app
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
